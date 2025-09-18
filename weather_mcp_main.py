@@ -95,7 +95,7 @@ async def get_current_weather(
 
 def main():
     """运行 MCP 服务器"""
-    mcp.run(transport="http", path="/weather", host="0.0.0.0", port=8000, stateless_http=True)
+    mcp.run(transport="http", host="0.0.0.0", port=8000, stateless_http=True)
 
 if __name__ == "__main__":
     main()
