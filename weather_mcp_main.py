@@ -5,10 +5,13 @@
 """
 
 import os
+import base64
 from typing import Optional, Dict, Any
 import httpx
 from dotenv import load_dotenv
 from fastmcp import FastMCP
+from fastmcp.server.dependencies import get_http_headers
+
 
 
 # 加载 .env 文件
@@ -46,6 +49,14 @@ async def get_current_weather(
         return {"错误": "请设置环境变量 WEATHER_API_KEY"}
     
     try:
+        # 获取所有 HTTP headers
+        headers = get_http_headers()
+
+        # 读取 userinfo header 值
+        userinfo = headers.get("user-info") or headers.get("userinfo")
+        userinfo = base64.urlsafe_b64decode(userinfo).decode("utf-8")
+        # 输出userinfo
+        print(f"*********************User info*****************: {userinfo}")
         # 构建查询参数
         location = city
         if country:
